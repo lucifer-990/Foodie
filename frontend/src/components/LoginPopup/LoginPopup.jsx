@@ -90,7 +90,8 @@ const LoginPopup = ({ setShowLogin }) => {
       <Toaster />
       <form ref={popupRef} className="login-popup-container">
         <div className="login-popup-title">
-          <h2>{forgotFlow ? "Reset Password" : currState}</h2>
+          {/* improved visibility for darkmode */}
+          <h2>{forgotFlow ? "Reset Password" : currState}</h2>  
           <img onClick={() => setShowLogin(false)} src={assets.cross_icon} alt="close" />
         </div>
 
