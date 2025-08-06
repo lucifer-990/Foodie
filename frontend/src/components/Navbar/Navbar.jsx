@@ -5,7 +5,6 @@ import { StoreContext } from "../context/StoreContext";
 import { assets } from "../../assets/frontend_assets/assets";
 import { ThemeContext } from "../context/ThemeContext";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 import {
   Home,
@@ -33,7 +32,6 @@ const Navbar = ({ setShowLogin }) => {
     setUser(storedUser);
   }, []);
 
-=======
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -59,12 +57,7 @@ const Navbar = ({ setShowLogin }) => {
     window.location.reload();
   };
 
-  return (
-    <div className={`navbar ${theme === "dark" ? "navbar-dark" : ""}`}>
-      <Link to="/" className="navbar-logo">
-        <img src={assets.foodie_icon} alt="app icon" className="app-icon " />
-
-  // Nav menu fragment to use in both desktop and mobile navbars
+  {/*  Nav menu fragment to use in both desktop and mobile navbars */}
   const navMenu = (
     <>
       <Link
@@ -154,10 +147,6 @@ const Navbar = ({ setShowLogin }) => {
               {getTotalCartAmount() > 0 && <div className="cart-dot"></div>}
             </Link>
           </div>
-          <button className="signin-button" onClick={() => setShowLogin(true)}>
-            <User size={16} />
-            <span>Sign In</span>
-          </button>
         </div>
 
 
