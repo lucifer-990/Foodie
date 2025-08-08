@@ -1,11 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./Navbar.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { StoreContext } from "../context/StoreContext";
-import { assets } from "../../assets/frontend_assets/assets";
 import { ThemeContext } from "../context/ThemeContext";
 import { useEffect } from "react";
-
+import { assets } from "../../assets/frontend_assets/assets";
 import {
   Home,
   Menu,
@@ -25,7 +24,9 @@ const Navbar = ({ setShowLogin }) => {
   const { getTotalCartAmount } = useContext(StoreContext);
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [user, setUser] = useState(null);
-  
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -35,7 +36,6 @@ const Navbar = ({ setShowLogin }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Handles smooth scroll or navigation for # links
   const handleNavMenuClick = (event, menuName, id) => {
     event.preventDefault();
     setMenu(menuName);
@@ -57,7 +57,6 @@ const Navbar = ({ setShowLogin }) => {
     window.location.reload();
   };
 
-  {/*  Nav menu fragment to use in both desktop and mobile navbars */}
   const navMenu = (
     <>
       <Link
@@ -67,7 +66,6 @@ const Navbar = ({ setShowLogin }) => {
       >
         <Home size={18} />
         <span>Home</span>
-
       </Link>
       <Link
         to="/restaurants"
@@ -101,7 +99,6 @@ const Navbar = ({ setShowLogin }) => {
         <Heart size={18} />
         <span>Wishlist</span>
       </Link>
-
       <Link
         to="/contact"
         onClick={() => setMenu("contact-us")}
@@ -110,7 +107,6 @@ const Navbar = ({ setShowLogin }) => {
         <Phone size={18} />
         <span>Contact</span>
       </Link>
-
       <a
         href="#faq"
         className={`nav-item ${menu === "faq" ? "active" : ""}`}
@@ -130,8 +126,10 @@ const Navbar = ({ setShowLogin }) => {
         <Link to="/" className="navbar-logo">
           <img src={assets.foodie_icon} alt="app icon" className="app-icon" />
         </Link>
+
         {/* Desktop menu (center, hidden on mobile) */}
         <nav className="navbar-menu navbar-menu-desktop">{navMenu}</nav>
+
         {/* Right action buttons */}
         <div className="navbar-right">
           <button
@@ -141,6 +139,7 @@ const Navbar = ({ setShowLogin }) => {
           >
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
+
           <div className="navbar-cart">
             <Link to="/cart" className="icon-button" aria-label="Go to cart">
               <ShoppingCart size={18} />
@@ -149,22 +148,25 @@ const Navbar = ({ setShowLogin }) => {
           </div>
         </div>
 
-
-        {user ? (
-          <div className="user-info">
-            <div className="user-avatar">{user.name?.charAt(0).toUpperCase()}</div>
-            <span>{user.name}</span>
-            <button className="signin-button" onClick={handleLogout}>
-              Logout
+          {user ? (
+            <div className="user-info">
+              <div className="user-avatar">
+                {user.name?.charAt(0).toUpperCase()}
+              </div>
+              <span>{user.name}</span>
+              <button className="signin-button" onClick={handleLogout}>
+                Logout
+              </button>
+            </div>
+          ) : (
+            <button className="signin-button" onClick={() => setShowLogin(true)}>
+              <User size={16} />
+              <span>Sign In</span>
             </button>
-          </div>
-        ) : (
-          <button className="signin-button" onClick={() => setShowLogin(true)}>
-            <User size={16} />
-            <span>Sign In</span>
-          </button>
-        )}
+          )}
+        </div>
       </div>
+
       {/* Mobile bottom nav */}
       <nav className="navbar-menu-mobile">{navMenu}</nav>
     </>
