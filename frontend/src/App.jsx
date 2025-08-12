@@ -21,6 +21,7 @@ import ContactPage from "./pages/Contactpage";
 import { Toaster } from "react-hot-toast";
 import LoadingAnimation from "./components/LoadingAnimation";
 import ScrollToTop from "../utility/ScrollToTop";
+import NotFound from "./pages/Notfound";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -82,7 +83,7 @@ const App = () => {
             <Route path="/restaurants" element={<Restaurants />} />
 
             <Route path="/restaurant/:id" element={<RestaurantDetail />} />
-        
+            <Route path="*" element={<NotFound />} />
           </Routes>
 
           <ScrollToTopButton /> {/* floating button */}
